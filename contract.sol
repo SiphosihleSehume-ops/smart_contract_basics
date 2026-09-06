@@ -59,6 +59,38 @@ contract School {
     }
 }
 
+contract StudentSystem is School {
+
+    // Database
+    struct Student {
+        string name;
+        uint mathScore;
+        uint scienceScore;
+    }
+
+    // Mapping the student id to a student
+    mapping(uint => Student) public students;
+
+    // Creating a school within a Schooling System; 
+    // Since we are inheriting, we have access to the `school name`
+    constructor(string memory _schoolName) School(_schoolName){
+
+    }
+
+    // Add your behaviours or contract actions
+    // 1. Adding student
+    function addStudent(uint _id, string calldata _name, uint _mathGrade, uint _scienceGrade) public {
+        // Creates the student object/struct
+        students[_id] = Student(_name, _mathGrade, _scienceGrade);
+    }
+
+    // 2. Retrieve the student: Returns Student information, not the actual object.
+    function getStudent(uint _id) public view returns (string memory, uint, uint) {
+        Student storage student = students[_id];
+        return (student.name, student.mathScore, student.scienceScore);
+    }
+}
+
 
 
 
