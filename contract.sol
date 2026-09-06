@@ -43,6 +43,21 @@ contract Child_f {
     }
 }
 
+// School system
+
+contract School {
+    
+    // storage
+    string public schoolName;
+
+    constructor(string memory _name) {
+        schoolName = _name;
+    }
+
+    function getSchoolName() public view returns (string memory) {
+        return schoolName;
+    }
+}
 
 
 
