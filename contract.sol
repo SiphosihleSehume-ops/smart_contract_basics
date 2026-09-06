@@ -91,6 +91,89 @@ contract StudentSystem is School {
     }
 }
 
+// Admin Contract
+contract AdminControl {
+    address public admin;
+
+    constructor() {
+        admin = msg.sender;
+    }
+
+    // Create a modifier to restrict access
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not admin");
+        _;
+    }
+
+    // 1. Add contract behaviour; change admin
+    function changeAdmin(address _newAdmin) public onlyAdmin {
+        admin = _newAdmin;
+    }
+}
+
+// ABC: needs to store string values i.e. beginner, junior, senior
+// WTC: needs to store grades 
+// GOAL: link them up together. Link them together.
+
+// Exercise: WTC + ABC
+
+contract WTC {
+
+    // storage 
+    struct Student {
+        string name;
+        uint formativeScore;
+        uint summativeScore;
+    }
+
+    string public schoolName;
+
+    constructor(string memory _name) {
+        schoolName = _name;
+    }
+
+    mapping(uint => Student) public students;
+
+    // Retrieve institution name
+    function getInstitutionName() public view returns (string memory) {
+        return schoolName;
+    }
+
+    // Add a studenr
+    function addStudent(uint _id, string calldata _name, uint _formativeScore, uint _summativeScore) public {
+        students[_id] = Student(_name, _formativeScore, _summativeScore);
+    }
+
+    // Retrieve student score
+    function getStudent(uint _id) public view returns (string memory, uint, uint) {
+        Student storage student = students[_id];
+        return (student.name, student.formativeScore, student.summativeScore);
+    }
+}
+
+contract ABC {
+
+    // storage
+    string instituteName;
+
+    struct Member {
+        string name;
+        string academicLevel;
+    }
+
+    constructor(string memory _name) {
+    }
+
+    mapping(uint => Member) public members;
+
+    // Retrieve institution name
+    function getInsituteName() public view returns (string memory) {
+        return instituteName;
+    }
+
+    // Retrieve 
+}
+
 
 
 
